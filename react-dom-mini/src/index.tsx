@@ -15,5 +15,5 @@ const rootContainer = document.querySelector('#root');
 // render(<InitialRenderExample />, rootContainer);
 // render(<PropChangeExample />, rootContainer);
 // render(<InsertExample />, rootContainer);
-render(<RemoveExample />, rootContainer);
-// render(<TextUpdateExample />, rootContainer);
+// render(<RemoveExample />, rootContainer);
+render(<TextUpdateExample />, rootContainer);

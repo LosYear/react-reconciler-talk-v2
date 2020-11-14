@@ -152,7 +152,9 @@ const hostConfig: ReconcilerDOMHostConfig = {
     /*
      * Выполняется во время коммит-фазы, если на текстовом листе произошло изменение
      */
-    // commitTextUpdate(textInstance, oldText, newText) {},
+    commitTextUpdate(textInstance, oldText, newText) {
+        textInstance.nodeValue = newText;
+    },
 
     // Заглушки
     getRootHostContext(rootContainerInstance) {},
