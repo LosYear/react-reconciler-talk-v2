@@ -136,12 +136,16 @@ const hostConfig: ReconcilerDOMHostConfig = {
      * Удаляет некоторого ребенка (и его детей)
      * Вызывается в стадии коммита
      */
-    // removeChild(parentInstance, child) {},
+    removeChild(parentInstance, child) {
+        parentInstance.removeChild(child);
+    },
 
     /*
      * Аналогично removeChild, если родитель – корневой контейнер
      */
-    // removeChildFromContainer(container, child) {},
+    removeChildFromContainer(container, child) {
+        container.removeChild(child);
+    },
 
     // Обновление текстовых листьев
 
