@@ -111,18 +111,24 @@ const hostConfig: ReconcilerDOMHostConfig = {
      * Присоединяет ребенка к родителю
      * Вызывается для ребенка на стадии коммита, если родитель уже отрисован на экране
      * */
-    // appendChild(parentInstance, child) {},
+    appendChild(parentInstance, child) {
+        parentInstance.appendChild(child);
+    },
 
     /*
      * Вставляет нового ребенка перед некоторым узлом, который уже существует на экране
      * Вызывается во время коммит-фазы
      */
-    // insertBefore(parentInstance, child, beforeChild) {},
+    insertBefore(parentInstance, child, beforeChild) {
+        parentInstance.insertBefore(child, beforeChild);
+    },
 
     /*
      * Аналогично insertBefore, только родитель – корневой контейнер
      */
-    // insertInContainerBefore(container, child, beforeChild) {},
+    insertInContainerBefore(container, child, beforeChild) {
+        container.insertBefore(child, beforeChild);
+    },
 
     // Удаление узлов
 
