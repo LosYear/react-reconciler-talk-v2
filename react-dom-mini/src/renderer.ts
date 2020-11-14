@@ -26,7 +26,13 @@ const hostConfig: ReconcilerDOMHostConfig = {
      * и дальнейший обход вложенного поддерева осуществляться не будет
      * false: рекурсивная обработка поддерева продолжается
      * */
-    // shouldSetTextContent: (type, props) => {},
+    shouldSetTextContent: (type, props) => {
+        return (
+            typeof props.dangerouslySetInnerHTML === 'object' &&
+            props.dangerouslySetInnerHTML !== null &&
+            props.dangerouslySetInnerHTML.__html !== null
+        );
+    },
 
     /*
      * Сопоставляет хост-компонент с конкретным инстансом в среде
@@ -35,7 +41,23 @@ const hostConfig: ReconcilerDOMHostConfig = {
      *
      * Возвращает созданный инстанс
      * */
-    // createInstance(type, props) {},
+    createInstance(type, props) {
+        const node = document.createElement(type);
+
+        if (props.className) {
+            node.className = props.className;
+        }
+
+        if (isImgElement(node) && props.src) {
+            node.src = props.src;
+        }
+
+        if (props.onClick) {
+            node.addEventListener('click', props.onClick);
+        }
+
+        return node;
+    },
 
     /*
      * Создает представление для текстового листа в среде
@@ -43,20 +65,26 @@ const hostConfig: ReconcilerDOMHostConfig = {
      *
      * Возвращает созданный текстовый инстанс
      * */
-    // createTextInstance(text) {},
+    createTextInstance(text) {
+        return document.createTextNode(text);
+    },
 
     /*
      * Присоединяет ребенка к родителю
      * Вызывается на каждом ребенке, если родитель еще не отрисован на экране
      * (т.е. во время рендер-фазы)
      * */
-    // appendInitialChild(parentInstance, child) {},
+    appendInitialChild(parentInstance, child) {
+        parentInstance.appendChild(child);
+    },
 
     /*
      * Добавляет ребенка корневому контейнеру
      * Вызывается для каждого ребенка во время коммит-фазы
      * */
-    // appendChildToContainer(container, child) {},
+    appendChildToContainer(container, child) {
+        container.appendChild(child);
+    },
 
     // Изменение пропсов
 
