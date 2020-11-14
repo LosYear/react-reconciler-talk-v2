@@ -93,13 +93,17 @@ const hostConfig: ReconcilerDOMHostConfig = {
      * Основная задача – найти их, но не вносить. Рекурсивно вызывается на всех
      * вершинах изменившегося поддерева (кроме текстовых) во время рендер-фазы.
      * */
-    // prepareUpdate(instance, type, oldProps, newProps) {},
+    prepareUpdate(instance, type, oldProps, newProps) {
+        return newProps;
+    },
 
     /*
      * Вносит изменения, найденные ранее. Вызывается в фазе коммита
      * на всех элементах, которые имеют updatePayload
      * */
-    // commitUpdate(domElement, updatePayload, type, oldProps, newProps) {},
+    commitUpdate(domElement, updatePayload, type, oldProps, newProps) {
+        domElement.className = updatePayload.className ?? '';
+    },
 
     // Вставка узлов
 
