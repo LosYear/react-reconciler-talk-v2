@@ -28,11 +28,7 @@ const hostConfig: ReconcilerFigmaHostConfig = {
      * false: рекурсивная обработка поддерева продолжается
      * */
     shouldSetTextContent: (type, props) => {
-        return (
-            typeof props.dangerouslySetInnerHTML === 'object' &&
-            props.dangerouslySetInnerHTML !== null &&
-            props.dangerouslySetInnerHTML.__html !== null
-        );
+        return type === 'text';
     },
 
     /*
@@ -43,31 +39,29 @@ const hostConfig: ReconcilerFigmaHostConfig = {
      * Возвращает созданный инстанс
      * */
     createInstance(type, props) {
-        const node = document.createElement(type);
+        let node;
 
-        if (props.className) {
-            node.className = props.className;
+        if (type === 'frame') {
+            node = figma.createFrame();
+        } else if (type === 'rectangle') {
+            node = figma.createRectangle();
+        } else if (type === 'text') {
+            node = figma.createText();
+            node.characters = props.children;
+        } else {
+            throw Error('Unsupported host-component');
         }
 
-        if (isImgElement(node) && props.src) {
-            node.src = props.src;
-        }
+        node.x = props.x ?? node.x;
+        node.y = props.y ?? node.y;
 
-        if (props.onClick) {
-            node.addEventListener('click', props.onClick);
+        node.resize(props.width ?? node.width, props.height ?? node.height);
+
+        if (props.backgroundColor) {
+            backgroundColorAssign(node, props.backgroundColor);
         }
 
         return node;
-    },
-
-    /*
-     * Создает представление для текстового листа в среде
-     * Вызывается исключительно на текстовых листьях во время рендер-фазы
-     *
-     * Возвращает созданный текстовый инстанс
-     * */
-    createTextInstance(text) {
-        return document.createTextNode(text);
     },
 
     /*
@@ -94,17 +88,17 @@ const hostConfig: ReconcilerFigmaHostConfig = {
      * Основная задача – найти их, но не вносить. Рекурсивно вызывается на всех
      * вершинах изменившегося поддерева (кроме текстовых) во время рендер-фазы.
      * */
-    prepareUpdate(instance, type, oldProps, newProps) {
-        return newProps;
-    },
+    // prepareUpdate(instance, type, oldProps, newProps) {
+    //     return newProps;
+    // },
 
     /*
      * Вносит изменения, найденные ранее. Вызывается в фазе коммита
      * на всех элементах, которые имеют updatePayload
      * */
-    commitUpdate(domElement, updatePayload, type, oldProps, newProps) {
-        domElement.className = updatePayload.className ?? '';
-    },
+    // commitUpdate(domElement, updatePayload, type, oldProps, newProps) {
+    //     domElement.className = updatePayload.className ?? '';
+    // },
 
     // Вставка узлов
 
@@ -112,24 +106,24 @@ const hostConfig: ReconcilerFigmaHostConfig = {
      * Присоединяет ребенка к родителю
      * Вызывается для ребенка на стадии коммита, если родитель уже отрисован на экране
      * */
-    appendChild(parentInstance, child) {
-        parentInstance.appendChild(child);
-    },
+    // appendChild(parentInstance, child) {
+    //     parentInstance.appendChild(child);
+    // },
 
     /*
      * Вставляет нового ребенка перед некоторым узлом, который уже существует на экране
      * Вызывается во время коммит-фазы
      */
-    insertBefore(parentInstance, child, beforeChild) {
-        parentInstance.insertBefore(child, beforeChild);
-    },
+    // insertBefore(parentInstance, child, beforeChild) {
+    //     parentInstance.insertBefore(child, beforeChild);
+    // },
 
     /*
      * Аналогично insertBefore, только родитель – корневой контейнер
      */
-    insertInContainerBefore(container, child, beforeChild) {
-        container.insertBefore(child, beforeChild);
-    },
+    // insertInContainerBefore(container, child, beforeChild) {
+    //     container.insertBefore(child, beforeChild);
+    // },
 
     // Удаление узлов
 
@@ -137,25 +131,25 @@ const hostConfig: ReconcilerFigmaHostConfig = {
      * Удаляет некоторого ребенка (и его детей)
      * Вызывается в стадии коммита
      */
-    removeChild(parentInstance, child) {
-        parentInstance.removeChild(child);
-    },
+    // removeChild(parentInstance, child) {
+    //     parentInstance.removeChild(child);
+    // },
 
     /*
      * Аналогично removeChild, если родитель – корневой контейнер
      */
-    removeChildFromContainer(container, child) {
-        container.removeChild(child);
-    },
+    // removeChildFromContainer(container, child) {
+    //     container.removeChild(child);
+    // },
 
     // Обновление текстовых листьев
 
     /*
      * Выполняется во время коммит-фазы, если на текстовом листе произошло изменение
      */
-    commitTextUpdate(textInstance, oldText, newText) {
-        textInstance.nodeValue = newText;
-    },
+    // commitTextUpdate(textInstance, oldText, newText) {
+    //     textInstance.nodeValue = newText;
+    // },
 
     // Заглушки
     getRootHostContext(rootContainerInstance) {},
