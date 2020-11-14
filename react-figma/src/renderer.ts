@@ -108,24 +108,26 @@ const hostConfig: ReconcilerFigmaHostConfig = {
      * Присоединяет ребенка к родителю
      * Вызывается для ребенка на стадии коммита, если родитель уже отрисован на экране
      * */
-    // appendChild(parentInstance, child) {
-    //     parentInstance.appendChild(child);
-    // },
+    appendChild(parentInstance, child) {
+        parentInstance.appendChild(child);
+    },
 
     /*
      * Вставляет нового ребенка перед некоторым узлом, который уже существует на экране
      * Вызывается во время коммит-фазы
      */
-    // insertBefore(parentInstance, child, beforeChild) {
-    //     parentInstance.insertBefore(child, beforeChild);
-    // },
+    insertBefore(parentInstance, child, beforeChild) {
+        const index = parentInstance.children.indexOf(beforeChild);
+        parentInstance.insertChild(index, child);
+    },
 
     /*
      * Аналогично insertBefore, только родитель – корневой контейнер
      */
-    // insertInContainerBefore(container, child, beforeChild) {
-    //     container.insertBefore(child, beforeChild);
-    // },
+    insertInContainerBefore(container, child, beforeChild) {
+        const index = container.children.indexOf(beforeChild);
+        container.insertChild(index, child);
+    },
 
     // Удаление узлов
 
@@ -133,25 +135,16 @@ const hostConfig: ReconcilerFigmaHostConfig = {
      * Удаляет некоторого ребенка (и его детей)
      * Вызывается в стадии коммита
      */
-    // removeChild(parentInstance, child) {
-    //     parentInstance.removeChild(child);
-    // },
+    removeChild(parentInstance, child) {
+        child.remove();
+    },
 
     /*
      * Аналогично removeChild, если родитель – корневой контейнер
      */
-    // removeChildFromContainer(container, child) {
-    //     container.removeChild(child);
-    // },
-
-    // Обновление текстовых листьев
-
-    /*
-     * Выполняется во время коммит-фазы, если на текстовом листе произошло изменение
-     */
-    // commitTextUpdate(textInstance, oldText, newText) {
-    //     textInstance.nodeValue = newText;
-    // },
+    removeChildFromContainer(container, child) {
+        child.remove();
+    },
 
     // Заглушки
     getRootHostContext(rootContainerInstance) {},

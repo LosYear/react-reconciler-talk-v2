@@ -8,6 +8,6 @@ import { render } from './renderer';
     await figma.loadFontAsync({ family: 'Roboto', style: 'Regular' });
 
     // render(<InitialRenderExample />, figma.currentPage);
-    render(<PropChangeExample />, figma.currentPage);
-    // render(<InsertRemoveExample />, figma.currentPage);
+    // render(<PropChangeExample />, figma.currentPage);
+    render(<InsertRemoveExample />, figma.currentPage);
 })();
