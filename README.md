@@ -8,7 +8,7 @@ React – удивительно универсальная технология
 
 Доклад окажется полезным практикующим разработчикам и прольет свет на внутреннее устройство архитектуры React и React DOM.
 
-[Слайды](https://github.com/LosYear/react-reconciler-talk-v2/blob/master/materials/slides.pdf)
+[Слайды](https://speakerdeck.com/losyear/react-reconciler-kak-napisat-sobstviennyi-riendierier-holyjs-moscow-2020)
 
 ## Примеры
 
