@@ -50,6 +50,10 @@ React – удивительно универсальная технология
 - [React Figma](https://github.com/react-figma)
 - [Пакет react-reconciler](https://github.com/facebook/react/tree/master/packages/react-reconciler)
 - [Figma Plugin API](https://www.figma.com/plugin-docs/intro/)
+- [Figma to code](https://github.com/bernaferrari/FigmaToCode)
+- [Overlay](https://overlay-tech.com)
+- [Зар Захаров, Александр Каменяр — Figma to React: доставка дизайна в код](https://www.youtube.com/watch?v=A3CamtT9VBs)
+- [Илья Лесик – Как создать мультиплатформенную дизайн-систему на React](https://holyjs-moscow.ru/2020/msk/talks/5udhzhsrgbzzg3r496hmge/)
 
 ### Создание рендеров
 
